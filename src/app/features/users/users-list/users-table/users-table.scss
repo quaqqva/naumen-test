@@ -10,3 +10,15 @@
 .isActive {
   width: 100px;
 }
+
+.user-row {
+  cursor: pointer;
+
+  td {
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  &:hover td {
+    background-color: var(--tui-background-base-alt);
+  }
+}
