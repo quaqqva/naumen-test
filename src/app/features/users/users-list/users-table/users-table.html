@@ -1,0 +1,28 @@
+<table tuiTable class="table" [columns]="columnNames">
+  <thead>
+    <tr tuiThGroup>
+      @for (column of wordsTableColumns; track column) {
+        <th class="{{ columnNames[$index] }}" tuiTh [resizable]="false">
+          {{ column }}
+        </th>
+      }
+    </tr>
+  </thead>
+  <tbody tuiTbody [data]="users()">
+    @for (user of users(); track user.id) {
+      <tr class="user-row" tuiTr (click)="onUserClick(user)">
+        <td tuiTd *tuiCell="'id'">
+          {{ user.id }}
+        </td>
+        <td tuiTd *tuiCell="'name'">
+          {{ user.name }}
+        </td>
+        <td tuiTd *tuiCell="'isActive'">
+          {{ user.isActive ? "Да" : "Нет" }}
+        </td>
+      </tr>
+    } @empty {
+      <td [colSpan]="columnNames.length">Ничего не найдено</td>
+    }
+  </tbody>
+</table>

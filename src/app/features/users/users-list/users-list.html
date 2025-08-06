@@ -1,0 +1,6 @@
+<h1>Пользователи</h1>
+<app-user-filters (filtersChanged)="onFiltersChanged($event)" />
+<app-users-table
+  [users]="usersState.users()"
+  (userClicked)="onUserClicked($event)"
+/>
