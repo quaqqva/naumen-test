@@ -1,0 +1,17 @@
+<tui-textfield [iconStart]="iconStart()">
+  @if (label()) {
+    <label [for]="control()" tuiLabel>{{ label() }}</label>
+  }
+  <input
+    [formControl]="control()"
+    [placeholder]="placeholder()"
+    tuiTextfield
+    [type]="'text'"
+  />
+</tui-textfield>
+@if (shouldShowError()) {
+  <tui-error
+    [formControl]="control()"
+    [error]="[] | tuiFieldError | async"
+  ></tui-error>
+}
