@@ -1,31 +1,55 @@
-import { ChangeDetectionStrategy, Component, output } from '@angular/core';
-import { UserFiltersData } from './user-filters-data';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  output,
+} from '@angular/core';
+import { UserFiltersData } from '../user-filters-data';
 import { Input } from '../../../../shared/ui/input/input';
-import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime } from 'rxjs';
+import { TuiFilter } from '@taiga-ui/kit';
+import { UserStatus } from '../../user-status';
 
 @Component({
   selector: 'app-user-filters',
-  imports: [Input],
+  imports: [Input, ReactiveFormsModule, TuiFilter],
   templateUrl: './user-filters.html',
   styleUrl: './user-filters.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFilters {
-  private isActive: boolean | null = null;
+  readonly statusFilterOptions = Object.values(UserStatus);
 
   readonly filtersChanged = output<UserFiltersData>();
 
-  readonly searchControl = new FormControl('');
+  readonly form = inject(FormBuilder).group({
+    name: [''],
+    status: [[] as string[]],
+  });
 
   constructor() {
-    this.searchControl.valueChanges
-      .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe((value) => {
-        this.filtersChanged.emit({
-          name: value,
-          isActive: this.isActive,
-        });
-      });
+    this.form.valueChanges.pipe(debounceTime(300)).subscribe(() => {
+      this.filtersChanged.emit(this.serializeForm());
+    });
+  }
+
+  get nameControl() {
+    return this.form.controls.name;
+  }
+
+  get statusControl() {
+    return this.form.controls.status;
+  }
+
+  private serializeForm(): UserFiltersData {
+    const status = this.statusControl.value;
+    const isActive =
+      status && status.length === 1 ? status[0] === UserStatus.Active : null;
+
+    return {
+      name: this.nameControl.value,
+      isActive,
+    };
   }
 }

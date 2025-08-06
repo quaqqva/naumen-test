@@ -15,6 +15,7 @@ module.exports = tseslint.config(
       eslintPluginPrettierRecommended,
       eslintConfigPrettier,
     ],
+    ignores: ["**/node_modules/**", "**/dist/**", "**/.angular/**"],
     processor: angular.processInlineTemplates,
     rules: {
       "@typescript-eslint/no-empty-object-type": "off",

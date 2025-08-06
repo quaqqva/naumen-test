@@ -1,5 +1,13 @@
-<app-input
-  [label]="'Поиск'"
-  [control]="searchControl"
-  [placeholder]="'Начните вводить имя пользователя...'"
-/>
+<form class="filters-form" [formGroup]="form">
+  <app-input
+    [label]="'Поиск'"
+    [control]="nameControl"
+    [placeholder]="'Начните вводить имя пользователя...'"
+  />
+  <tui-filter
+    [formControl]="statusControl"
+    [size]="'s'"
+    [items]="statusFilterOptions"
+  />
+</form>
+

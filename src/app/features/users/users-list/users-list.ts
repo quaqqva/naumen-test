@@ -4,7 +4,7 @@ import { UsersListState } from './users-list-state/users-list-state';
 import { User } from '../user';
 import { InfoDialogOpener } from '../../../shared/ui/dialog/info-dialog-opener';
 import { UserFilters } from './user-filters/user-filters';
-import { UserFiltersData } from './user-filters/user-filters-data';
+import { UserFiltersData } from './user-filters-data';
 
 @Component({
   selector: 'app-users-list',

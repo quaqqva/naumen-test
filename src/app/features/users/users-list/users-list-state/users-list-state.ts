@@ -1,6 +1,6 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { usersListData } from './users-list-data';
-import { UserFiltersData } from '../user-filters/user-filters-data';
+import { UserFiltersData } from '../user-filters-data';
 
 @Injectable({
   providedIn: 'root',
