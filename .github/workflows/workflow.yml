@@ -19,9 +19,9 @@ jobs:
 
       - name: Install and build
         working-directory: ./
-        run: npm install && MSYS2_ARG_CONV_EXCL="--base-href" npm run build -- --base-href="/naumen-test/" && cp dist/browser/index.html dist/browser/404.html
+        run: npm install && MSYS2_ARG_CONV_EXCL="--base-href" npm run build -- --base-href="/naumen-test/" && cp dist/naumen-test/browser/index.html dist/naumen-test/browser/404.html
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.6.0
         with:
-          folder: dist/browser
+          folder: dist/naumen-test/browser
