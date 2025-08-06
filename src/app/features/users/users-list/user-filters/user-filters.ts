@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
   output,
 } from '@angular/core';
@@ -10,6 +11,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { TuiFilter } from '@taiga-ui/kit';
 import { UserStatus } from '../../user-status';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-user-filters',
@@ -28,10 +30,14 @@ export class UserFilters {
     status: [[] as string[]],
   });
 
+  private readonly _destroyRef = inject(DestroyRef);
+
   constructor() {
-    this.form.valueChanges.pipe(debounceTime(300)).subscribe(() => {
-      this.filtersChanged.emit(this.serializeForm());
-    });
+    this.form.valueChanges
+      .pipe(debounceTime(300), takeUntilDestroyed(this._destroyRef))
+      .subscribe(() => {
+        this.filtersChanged.emit(this.serializeForm());
+      });
   }
 
   get nameControl() {
